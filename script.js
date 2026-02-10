@@ -1216,6 +1216,41 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log('✅ Toutes les classes initialisées');
 });
+// ========== COMPTE À REBOURS VERS LE 14 FÉVRIER 2026 ==========
+function updateCountdown() {
+    // Date cible : 14 février 2026 à 23h59:59
+    const targetDate = new Date('February 14, 2026 23:59:59').getTime();
+    const now = new Date().getTime();
+    const timeRemaining = targetDate - now;
+
+    if (timeRemaining < 0) {
+        // C'est fini !
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        document.querySelector('.countdown-wrapper').classList.add('expired');
+        return;
+    }
+
+    // Calculer les jours, heures, minutes, secondes
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // Mettre à jour l'affichage (avec zéros devant si < 10)
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+// Lancer le countdown au chargement
+updateCountdown();
+
+// Mettre à jour chaque seconde
+setInterval(updateCountdown, 1000);
 
 /* Animations CSS inline */
 const style = document.createElement('style');
